@@ -142,8 +142,8 @@ The application consists of:
 Create a `.env` file at the repository root for the backend:
 
 ```env
-SECRET_KEY=replace-with-a-long-random-secret
-DATABASE_URL_PRODUCTION=postgresql+asyncpg://user:password@localhost:5432/cocoa_inspection
+SECRET_KEY=replace-with-a-long-64bit-random-secret
+DATABASE_URL=postgresql+asyncpg://user:password@localhost:5432/cocoa_inspection
 STORAGE_ACCOUNT_NAME=your-storage-account-name
 ```
 
@@ -185,18 +185,19 @@ The client runs at `http://localhost:5173` by default.
 
 ## Main API endpoints
 
-| Method  | Endpoint                                      | Purpose                                      |
-| ------- | --------------------------------------------- | -------------------------------------------- |
-| `GET`   | `/health`                                     | Service health check                         |
-| `POST`  | `/api/v1/auth/token`                          | Authenticate and obtain a JWT                |
-| `POST`  | `/api/v1/auth/signup/user`                    | Create a pending user account                |
-| `POST`  | `/api/v1/auth/signup/admin`                   | Create an admin in the current organisation  |
-| `GET`   | `/api/v1/auth/current_user`                   | Retrieve the authenticated user's profile   |
-| `PATCH` | `/api/v1/auth/user/status`                    | Submit bulk pending-user status changes      |
-| `PATCH` | `/api/v1/auth/change_password`                | Change the authenticated user's password     |
-| `POST`  | `/api/v1/inspect`                             | Run inference on an uploaded image           |
-| `POST`  | `/api/v1/submission`                          | Store a confirmed inspection and its image   |
-| `GET`   | `/api/v1/submission/retrieve_org_inspections` | Retrieve admin dashboard data                |
+| Method  | Endpoint                                    | Purpose                                      |
+| ------- | ------------------------------------------- | -------------------------------------------- |
+| `GET`   | `/health`                                   | Service health check                         |
+| `POST`  | `/api/v1/auth/token`                        | Authenticate and obtain a JWT                |
+| `POST`  | `/api/v1/auth/signup`                       | Create a pending user account                |
+| `GET`   | `/api/v1/users/me`                          | Retrieve the authenticated user's profile    |
+| `PATCH` | `/api/v1/users/me/password`                 | Change the authenticated user's password     |
+| `GET`   | `/api/v1/admin/dashboard`                   | Retrieve admin dashboard data                |
+| `POST`  | `/api/v1/admin/admins`                      | Create an admin in the current organisation  |
+| `PATCH` | `/api/v1/admin/users/status`                | Submit bulk pending-user status changes      |
+| `GET`   | `/api/v1/admin/users/{user_id}/inspections` | Retrieve one organisation user's inspections |
+| `POST`  | `/api/v1/inspect`                           | Run inference on an uploaded image           |
+| `POST`  | `/api/v1/submissions`                       | Store a confirmed inspection and its image   |
 
 ### Bulk signup approval payload
 
@@ -255,7 +256,7 @@ frontend.
 | ---------------- | -------------------------------------- |
 | Machine learning | YOLO26n, ONNX, ONNX Runtime, Pillow    |
 | Backend          | FastAPI, Pydantic, SQLAlchemy, asyncpg |
-| Authentication   | JWT, Argon2                             |
+| Authentication   | JWT, Argon2                            |
 | Database         | PostgreSQL                             |
 | Frontend         | React, TypeScript, Vite, Tailwind CSS  |
 | Cloud storage    | Azure Blob Storage, Azure Identity     |

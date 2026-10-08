@@ -7,74 +7,123 @@ interface SignUpProps {
   ) => Promise<void>;
 }
 
+const inputStyle =
+  "h-12 w-full rounded border border-slate-400 bg-white px-3 outline-none focus:border-blue-600 focus:ring-3 focus:ring-blue-600/10";
+
 function SignUp({ handleSubmitSignUp, handleNotRegistered }: SignUpProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const handleShowPassword = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
 
   return (
-    <div className="border-2 min-h-screen flex flex-col items-center justify-center">
-      <form
-        onSubmit={handleSubmitSignUp}
-        className="flex flex-col gap-4 border-3 border-radius-1 p-4 bg-[#D3D3D3]"
-      >
-        <h2>Sign Up Page</h2>
-        <label className="flex flex-col gap-1 border-1 p-5 items-start">
-          Organisation Name
+    <section
+      className="md:border-l md:border-slate-200 md:pl-12"
+      aria-labelledby="signup-heading"
+    >
+      <form onSubmit={handleSubmitSignUp} className="space-y-4">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-blue-700">
+            New account
+          </p>
+          <h2
+            id="signup-heading"
+            className="mt-2 text-3xl font-bold tracking-tight"
+          >
+            Request access
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            An administrator reviews each request before sign-in is enabled.
+          </p>
+        </div>
+
+        <div>
+          <label
+            htmlFor="signup-organisation"
+            className="mb-2 block text-sm font-bold"
+          >
+            Organisation name
+          </label>
           <input
+            id="signup-organisation"
+            required
             name="organisation_name"
             type="text"
-            defaultValue="Dummy_org"
-            className="bg-gray-200 hover:bg-gray-300 border-1 pl-1"
-            aria-label="don't change right now"
+            autoComplete="organization"
+            aria-label="Organisation name"
+            className={inputStyle}
           />
-        </label>
-        <label className="flex flex-col gap-1 border-1 p-5 items-start">
-          Username/Email
+        </div>
+
+        <div>
+          <label
+            htmlFor="signup-email"
+            className="mb-2 block text-sm font-bold"
+          >
+            Email address
+          </label>
           <input
+            id="signup-email"
             required
             name="username"
             type="email"
-            className="bg-gray-200 hover:bg-gray-300 border-1 pl-1"
+            autoComplete="email"
+            aria-label="Email address"
+            className={inputStyle}
           />
-        </label>
-        <label className="flex flex-col gap-1 border-1 p-5 items-start">
-          Password
+        </div>
+
+        <div>
+          <label
+            htmlFor="signup-password"
+            className="mb-2 block text-sm font-bold"
+          >
+            Password
+          </label>
           <input
+            id="signup-password"
             required
             name="password"
             type={isPasswordVisible ? "text" : "password"}
-            className="bg-gray-200 hover:bg-gray-300 border-1 pl-1"
+            autoComplete="new-password"
+            minLength={8}
+            aria-label="Password, at least 8 characters"
+            aria-describedby="password-help"
+            className={inputStyle}
           />
-          <div className="flex flex-row items-center gap-2 cursor-pointer">
+          <p id="password-help" className="mt-2 text-xs text-slate-500">
+            Use at least 8 characters.
+          </p>
+          <div className="mt-3 flex items-center gap-2 text-sm text-slate-600">
             <input
+              id="show-signup-password"
               type="checkbox"
-              id="show-password"
-              onChange={handleShowPassword}
-              className="cursor-pointer"
+              checked={isPasswordVisible}
+              onChange={() => setIsPasswordVisible((visible) => !visible)}
+              className="size-4 accent-blue-600"
             />
-            <label className="cursor-pointer select-none">Show Password</label>
+            <label htmlFor="show-signup-password">Show password</label>
           </div>
-        </label>
-
-        <label className="">ROLE: USER</label>
+        </div>
 
         <button
-          className="bg-green-400 gap-3 hover:bg-green-500 text-black cursor-pointer"
           type="submit"
-          value="save"
+          className="h-12 w-full rounded bg-blue-600 font-bold text-white hover:bg-blue-700"
+          aria-label="Create Cocoa Inspect account"
         >
-          Sign Up
+          Request access
         </button>
       </form>
-      <button
-        onClick={handleNotRegistered}
-        className="text-blue-300 gap-2 hover:text-blue-400 cursor-pointer"
-      >
-        Already registered? Go to login
-      </button>
-    </div>
+
+      <p className="mt-5 text-sm text-slate-600">
+        Already registered?{" "}
+        <button
+          type="button"
+          onClick={handleNotRegistered}
+          className="font-bold text-blue-700 underline underline-offset-3"
+          aria-label="Return to sign in"
+        >
+          Sign in
+        </button>
+      </p>
+    </section>
   );
 }
 

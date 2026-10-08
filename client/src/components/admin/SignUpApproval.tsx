@@ -37,7 +37,7 @@ function SignUpApproval({
     if (updates.length === 0) return;
 
     const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}/api/v1/auth/user/status`,
+      `${import.meta.env.VITE_SERVER_URL}/api/v1/admin/users/status`,
       {
         method: "PATCH",
         headers: {

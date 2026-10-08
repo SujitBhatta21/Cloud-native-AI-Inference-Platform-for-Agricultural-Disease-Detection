@@ -42,7 +42,7 @@ function ChangePassword({ onClose }: ChangePasswordProps) {
     setSubmitting(true);
 
     try {
-      const response = await fetch(`${serverUrl}/api/v1/auth/change_password`, {
+      const response = await fetch(`${serverUrl}/api/v1/users/me/password`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
