@@ -31,6 +31,7 @@ function SignUp({ handleSubmitSignUp, handleNotRegistered }: SignUpProps) {
           </h2>
           <p className="mt-2 text-sm leading-6 text-slate-600">
             An administrator reviews each request before sign-in is enabled.
+            Dummy_org is a default organisation name for testing or usecase.
           </p>
         </div>
 
@@ -44,6 +45,7 @@ function SignUp({ handleSubmitSignUp, handleNotRegistered }: SignUpProps) {
           <input
             id="signup-organisation"
             required
+            defaultValue="Dummy_org"
             name="organisation_name"
             type="text"
             autoComplete="organization"

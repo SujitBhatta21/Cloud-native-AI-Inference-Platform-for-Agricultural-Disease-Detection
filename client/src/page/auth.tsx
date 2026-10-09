@@ -5,6 +5,7 @@ import SignUp from "../components/signup";
 import LoggedIn from "../components/loggedIn";
 import type { UserData } from "../types/auth";
 import cocoaLogo from "../assets/Cocoa Disease Inspection Logo.png";
+import cocoaFlower from "../assets/Theobroma_cacao_flower_01.JPG";
 
 interface AuthProps {
   authenticated: boolean;
@@ -74,7 +75,11 @@ function Auth({ authenticated, handleLogin, handleLogout }: AuthProps) {
               className="grid size-9 place-items-center rounded-lg bg-blue-600 text-white"
               aria-hidden="true"
             >
-              <image>cocoaLogo</image>
+              <img
+                src={cocoaLogo}
+                alt="Cocoa Inspect Logo"
+                className="size-10 rounded-lg object-contain"
+              />
               <svg viewBox="0 0 32 32" className="size-5" fill="none"></svg>
             </span>
             Cocoa Inspect
@@ -124,36 +129,14 @@ function Auth({ authenticated, handleLogin, handleLogout }: AuthProps) {
               </a>
             </div>
           </div>
-
-          <figure className="grid min-h-[420px] place-items-center rounded-[20px_20px_64px_20px] bg-blue-600 p-10 text-white">
-            <svg
-              viewBox="0 0 260 340"
-              className="w-full max-w-[260px]"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M140 38c-5-15 2-26 17-33M151 26c22-12 38-8 49 11-22 6-38 3-49-11Z"
-                stroke="currentColor"
-                strokeWidth="5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M133 45C76 60 46 116 54 192c8 70 48 116 82 126 36-11 76-57 82-127 7-77-25-132-85-146Z"
-                fill="currentColor"
-                fillOpacity=".08"
-                stroke="currentColor"
-                strokeWidth="5"
-              />
-              <path
-                d="M134 52c-23 40-32 86-30 137 1 55 13 97 31 121M135 52c24 40 34 86 32 137-1 55-13 97-32 121M67 110c20 13 42 19 68 19s48-6 68-19M57 192c24 15 51 23 79 23 29 0 55-8 79-23"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-            </svg>
-          </figure>
+          <div className="flex flex-col items-center justify-center">
+            <img
+              src={cocoaFlower}
+              alt="Cocoa Inspect Logo"
+              className="rounded-lg object-contain"
+            />
+            <p>Fig: Image of cocoa flower (Creative common)</p>
+          </div>
         </section>
 
         <section
