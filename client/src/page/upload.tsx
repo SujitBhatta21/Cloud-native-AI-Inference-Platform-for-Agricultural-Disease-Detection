@@ -108,7 +108,7 @@ function UploadPage({ handleLogout, currentUser }: UploadPageProps) {
       formData.append("corrected_label", submissionData.corrected_label);
     }
 
-    const response = await fetch(`${VITE_SERVER_URL}/api/v1/submission`, {
+    const response = await fetch(`${VITE_SERVER_URL}/api/v1/submissions`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,

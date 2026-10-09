@@ -51,7 +51,7 @@ function Admin({ handleLogout, currentUser }: AdminProps) {
     const loadInspections = async () => {
       try {
         const response = await fetch(
-          `${VITE_SERVER_URL}/api/v1/submission/retrieve_org_inspections`,
+          `${VITE_SERVER_URL}/api/v1/admin/dashboard`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -123,7 +123,7 @@ function Admin({ handleLogout, currentUser }: AdminProps) {
     const formData = new FormData(e.currentTarget);
 
     const response = await fetch(
-      `${VITE_SERVER_URL}/api/v1/auth/signup/admin`,
+      `${VITE_SERVER_URL}/api/v1/admin/admins`,
       {
         method: "POST",
         headers: {

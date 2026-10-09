@@ -5,35 +5,41 @@ interface LoggedInProps {
 
 function LoggedIn({ handleLogout, handleGoBackToSession }: LoggedInProps) {
   return (
-    <main className="flex min-h-[calc(100svh-5rem)] items-center justify-center p-6">
-      <section className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg dark:border-gray-700 dark:bg-gray-900">
-        <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-green-600 dark:text-green-400">
-          Active session
-        </p>
-        <h1 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">
-          You&rsquo;re already logged in
-        </h1>
-        <p className="mb-8 text-gray-600 dark:text-gray-300">
-          Log out if you want to sign in with a different account.
-        </p>
-        <div className="flex flex-col gap-5 m-5 p-4">
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="w-full cursor-pointer rounded-lg bg-red-500 px-5 py-3 font-semibold text-white transition-colors hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
-          >
-            Log out
-          </button>
-          <button
-            type="button"
-            onClick={handleGoBackToSession}
-            className="w-full cursor-pointer rounded-lg bg-blue-500 px-5 py-3 font-semibold text-white transition-colors hover:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
-          >
-            Go to session
-          </button>
-        </div>
-      </section>
-    </main>
+    <section
+      className="md:border-l md:border-slate-200 md:pl-12"
+      aria-labelledby="active-session-heading"
+    >
+      <p className="text-xs font-bold uppercase tracking-[0.14em] text-blue-700">
+        Active session
+      </p>
+      <h2
+        id="active-session-heading"
+        className="mt-2 text-3xl font-bold tracking-tight"
+      >
+        You&rsquo;re already logged in
+      </h2>
+      <p className="mt-3 text-sm leading-6 text-slate-600">
+        Continue your inspection or sign in with a different account.
+      </p>
+      <div className="mt-6 space-y-3">
+        <button
+          type="button"
+          onClick={handleGoBackToSession}
+          className="h-12 w-full rounded bg-blue-600 font-bold text-white hover:bg-blue-700"
+          aria-label="Go to the current inspection session"
+        >
+          Continue inspection
+        </button>
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="h-12 w-full rounded border border-slate-400 font-bold hover:bg-slate-50"
+          aria-label="Log out of Cocoa Inspect"
+        >
+          Log out
+        </button>
+      </div>
+    </section>
   );
 }
 

@@ -2,15 +2,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
-import Home from "./page/home";
+import Home from "./page/auth";
 import UploadPage from "./page/upload";
 import ProtectedRoute, { type AuthStatus } from "./ProtectedRoute";
 import { useCallback, useEffect, useState } from "react";
 import type { UserData } from "./types/auth";
 import Admin from "./page/admin";
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 function App() {
-  const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
   const [authStatus, setAuthStatus] = useState<AuthStatus>(() =>
     localStorage.getItem("access_token") ? "checking" : "unauthenticated",
   );
@@ -19,15 +20,12 @@ function App() {
   const loadProfile = useCallback(
     async (token: string): Promise<UserData | null> => {
       try {
-        const response = await fetch(
-          `${VITE_SERVER_URL}/api/v1/auth/current_user`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        const response = await fetch(`${SERVER_URL}/api/v1/users/me`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
+        });
 
         const data = await response.json();
 

@@ -3,22 +3,17 @@ import logging
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
-from fastapi.concurrency import run_in_threadpool
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from src.db.session import SessionDependency
-from src.models import Inspection, User
-from src.schemas import InspectResponse, OrgInspectionsResponse
+from src.models import Inspection
+from src.schemas import InspectResponse
 from src.services.storage_service import upload_blob_image
 
-from src.services.auth_service import get_current_user, oauth2_scheme, get_org_name, get_all_inspections_by_org
+from src.services.auth_service import get_current_user, oauth2_scheme, get_org_name
 
 
-router = APIRouter(prefix="/submission", tags=["submission"])
+router = APIRouter(prefix="/submissions", tags=["submissions"])
 ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png"}
 logger = logging.getLogger("uvicorn.error")
-SEED_USER_EMAIL = "dummy@gmail.com" # I need to get current user cookie token.
 
 
 @router.post("", response_model=InspectResponse, status_code=status.HTTP_201_CREATED)
@@ -90,58 +85,3 @@ async def create_inspection(
     await session.refresh(inspection)
 
     return inspection
-
-
-@router.get("/retrieve_org_inspections", response_model=OrgInspectionsResponse)
-async def get_all_inspections_for_org(
-    jwt_token: Annotated[str, Depends(oauth2_scheme)],
-    session: SessionDependency
-    ):
-    """
-        Return: response model includes [[inspections list], human_correction_count, pending_users_count]
-    """
-    # Get organisation id for this admin user using the jwt_token.
-    all_user_count, all_inspections, human_corrected_count, pending_users = (
-        await get_all_inspections_by_org(jwt_token, session)
-    )
-    return {
-        "all_user_count": all_user_count,
-        "inspections": all_inspections,
-        "human_corrected_count": human_corrected_count,
-        "pending_users": pending_users,
-    }
-
-
-
-"""
-Endpoint that takes in user_id and organisation_id and returns
-all the inspection results submitted by this user as a part of this org.
-"""
-@router.get("/retrieve_user_inspection", response_model=InspectResponse)
-async def get_inspection(
-    session: SessionDependency,
-    organisation_id,
-    user_id,
-):
-    if not organisation_id or not user_id:
-        raise HTTPException(
-            status_code=500,
-            detail="Enter either org_id or user_id or both but not None",
-        )
-
-    result = await session.execute(
-        select(Inspection)
-        .join(User, User.id == Inspection.user_id)
-        .where(
-            Inspection.user_id==user_id, 
-            User.organisation_id==organisation_id
-        )
-    )
-
-    data = result.scalars().all()
-    return data
-
-
-# # Retrieve pending Users information.
-# @router.get("/admin/pending_users")
-# async def get_pending_user_data(jwt_token: Annotated[str, Depends(oauth2_scheme)] , session: SessionDependency):
